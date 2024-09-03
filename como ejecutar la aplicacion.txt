@@ -1,0 +1,4 @@
+Para ejecutarla, despues de instalar todos los paquetes desde install_dependencies.sh en la terminal de vsc
+    o desde cmd entrando a la carpeta que contiene el archivo escribis python app.py y ejecuta la aplicacion.
+    Despues que inicia te da una direccion ip en consola y abris esa ip, con eso tenes la vista.
+    La logica la ves desde el codigo en cada archivo html y en app.py tenes todo lo que controla.

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Revisión de Datos</title>
+</head>
+
+<body>
+    <h1>Revisión de Datos</h1>
+    <p>Patente: {{ patente }}</p>
+    <p>Cliente: {{ cliente }}</p>
+    <p>Teléfono: {{ telefono }}</p>
+    <p>Email: {{ mail }}</p>
+    <p>Marca: {{ mave }}</p>
+    <p>Modelo: {{ move }}</p>
+    <p>Hora del Turno: {{ hora }}</p>
+    <p>Tipo de Lavado: {{ lavado }}</p>
+    <form action="{{ url_for('generate_qr') }}" method="post">
+        <input type="hidden" name="patente" value="{{ patente }}">
+        <input type="hidden" name="nombre_cliente" value="{{ cliente }}">
+        <input type="hidden" name="telefono" value="{{ telefono }}">
+        <input type="hidden" name="mail" value="{{ mail }}">
+        <input type="hidden" name="marca" value="{{ mave }}">
+        <input type="hidden" name="modelo" value="{{ move }}">
+        <input type="hidden" name="hora_turno" value="{{ hora }}">
+        <input type="hidden" name="tipo_lavado" value="{{ lavado }}">
+        <button type="submit">Generar QR</button>
+    </form>
+</body>
+
+</html>

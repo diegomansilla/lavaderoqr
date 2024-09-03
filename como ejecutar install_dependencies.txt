@@ -1,0 +1,7 @@
+Install_dependencies tiene todos los paquetes que se necesitan para ejecutar esta app 
+    y todas las otras cuando se trabaje con base de datos. Para ejecutarlo:
+    1 - dar permisos de ejecucion con este comando:
+        chmod +x install_dependencies.sh
+    2 - Ejecutar con:
+        ./install_dependencies.sh
+Todo desde la terminal de VSC.

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Turno</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+
+<body>
+
+    <!--ALERTA DE DUPLICACION-->
+
+    <!--FIN ALERTA-->
+
+    <div class="container mt-5">
+        <h1 class="mb-4">Registrar Turno</h1>
+
+        <!-- Modal para mostrar mensajes de éxito o error -->
+        <div class="modal fade" id="mensajeModal" tabindex="-1" aria-labelledby="mensajeModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="mensajeModalLabel">Mensaje del sistema</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <ul id="mensajeContenido"></ul>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <form action="{{ url_for('registrar_turnos') }}" method="post">
+            <h2>Registrar Turno</h2>
+
+            <div class="mb-3">
+                <label for="fecha" class="form-label">Fecha de Ingreso:</label>
+                <input type="date" class="form-control" id="fecha" name="fecha" required readonly>
+            </div>
+
+            <div class="mb-3">
+                <label for="hora" class="form-label">Hora de Ingreso:</label>
+                <input type="time" class="form-control" id="hora" name="hora" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="vehiculo_id">Vehículo:</label>
+                <select class="form-control" id="vehiculo_id" name="vehiculo_id" required>
+                    <option value="">Seleccione un vehículo</option>
+                    {% for vehiculo in vehiculos %}
+                        <option value="{{ vehiculo.id }}">{{ vehiculo.matricula }} - {{ vehiculo.marca }} {{ vehiculo.modelo }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="tipo_lavado">Tipo de Lavado:</label>
+                <select id="tipo_lavado" name="tipo_lavado" class="form-control" required>
+                    <option value="lavado_comun">Lavado Común</option>
+                    <option value="lavado_medio">Lavado Medio</option>
+                    <option value="lavado_especial">Lavado Especial</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Registrar</button>
+            <a href="{{ url_for('index') }}" class="btn btn-secondary">Inicio</a>
+        </form>
+    </div>
+
+
+
+    <!-- Aquí se imprimirán los mensajes de Flask -->
+    <div id="mensajes" data-mensajes='{{ get_flashed_messages()|tojson|safe }}'></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var today = new Date().toISOString().split('T')[0];
+            document.getElementById('fecha').value = today;
+        });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Obtener los mensajes del div oculto
+            const mensajesDiv = document.getElementById('mensajes');
+            const mensajes = JSON.parse(mensajesDiv.getAttribute('data-mensajes'));
+
+            // Si hay mensajes, mostrarlos en el modal
+            if (mensajes.length > 0) {
+                const mensajeContenido = document.getElementById('mensajeContenido');
+                mensajes.forEach(function(message) {
+                    const li = document.createElement('li');
+                    li.textContent = message;
+                    mensajeContenido.appendChild(li);
+                });
+
+                const mensajeModal = new bootstrap.Modal(document.getElementById('mensajeModal'));
+                mensajeModal.show();
+            }
+        });
+    </script>
+</body>
+
+</html>
